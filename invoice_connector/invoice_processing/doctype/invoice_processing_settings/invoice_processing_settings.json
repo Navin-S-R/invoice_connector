@@ -1,0 +1,146 @@
+{
+    "name": "Invoice Processing Settings",
+    "doctype": "DocType",
+    "module": "Invoice Processing",
+    "issingle": 1,
+    "editable_grid": 1,
+    "track_changes": 1,
+    "fields": [
+        {
+            "fieldname": "service_connections_section",
+            "fieldtype": "Section Break",
+            "label": "Service Connections"
+        },
+        {
+            "fieldname": "extractor_url",
+            "fieldtype": "Data",
+            "label": "Extractor Service URL",
+            "default": "http://localhost:8099",
+            "description": "URL of the invoice-extractor FastAPI service",
+            "reqd": 1
+        },
+        {
+            "fieldname": "extractor_provider",
+            "fieldtype": "Select",
+            "label": "AI Provider",
+            "options": "\nollama\nanthropic\nopenai\ngoogle",
+            "description": "Override AI provider for extraction (leave blank to use extractor's default)"
+        },
+        {
+            "fieldname": "extractor_model",
+            "fieldtype": "Data",
+            "label": "AI Model",
+            "description": "Override AI model (leave blank to use extractor's default)"
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "mapper_url",
+            "fieldtype": "Data",
+            "label": "Mapper Service URL",
+            "default": "http://localhost:8098",
+            "description": "URL of the invoice-mapper FastAPI service",
+            "reqd": 1
+        },
+        {
+            "fieldname": "mapper_site_id",
+            "fieldtype": "Data",
+            "label": "Mapper Site ID",
+            "description": "Site ID registered in the mapper for this ERPNext instance"
+        },
+        {
+            "fieldname": "site_url",
+            "fieldtype": "Data",
+            "label": "This Site URL",
+            "description": "Public URL of this ERPNext site (for mapper to sync master data)"
+        },
+        {
+            "fieldname": "site_api_key",
+            "fieldtype": "Data",
+            "label": "API Key",
+            "description": "ERPNext API key for mapper to use when syncing"
+        },
+        {
+            "fieldname": "site_api_secret",
+            "fieldtype": "Password",
+            "label": "API Secret",
+            "description": "ERPNext API secret for mapper to use when syncing"
+        },
+        {
+            "fieldname": "processing_section",
+            "fieldtype": "Section Break",
+            "label": "Processing Options"
+        },
+        {
+            "fieldname": "auto_sync_master_data",
+            "fieldtype": "Check",
+            "label": "Auto-Sync Master Data",
+            "default": 1,
+            "description": "Automatically sync Suppliers, Items, Accounts, UOMs, Currencies to mapper"
+        },
+        {
+            "fieldname": "auto_create_purchase_invoice",
+            "fieldtype": "Check",
+            "label": "Auto-Create Purchase Invoice",
+            "default": 0,
+            "description": "Automatically create draft Purchase Invoices from fully mapped invoices"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "default_company",
+            "fieldtype": "Link",
+            "label": "Default Company",
+            "options": "Company",
+            "description": "Company to use when creating Purchase Invoices"
+        },
+        {
+            "fieldname": "default_expense_account",
+            "fieldtype": "Link",
+            "label": "Default Expense Account",
+            "options": "Account",
+            "description": "Fallback expense account for items without a mapped account"
+        },
+        {
+            "fieldname": "status_section",
+            "fieldtype": "Section Break",
+            "label": "Connection Status",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "extractor_status",
+            "fieldtype": "Data",
+            "label": "Extractor Status",
+            "read_only": 1
+        },
+        {
+            "fieldname": "mapper_status",
+            "fieldtype": "Data",
+            "label": "Mapper Status",
+            "read_only": 1
+        },
+        {
+            "fieldname": "last_sync_at",
+            "fieldtype": "Datetime",
+            "label": "Last Master Data Sync",
+            "read_only": 1
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1
+        },
+        {
+            "role": "Accounts Manager",
+            "read": 1,
+            "write": 1
+        }
+    ]
+}

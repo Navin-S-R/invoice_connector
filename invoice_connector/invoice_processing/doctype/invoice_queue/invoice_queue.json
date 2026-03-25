@@ -1,0 +1,161 @@
+{
+    "name": "Invoice Queue",
+    "doctype": "DocType",
+    "module": "Invoice Processing",
+    "autoname": "IQ-.#####",
+    "track_changes": 1,
+    "fields": [
+        {
+            "fieldname": "file",
+            "fieldtype": "Attach",
+            "label": "Invoice File",
+            "reqd": 1,
+            "description": "Upload PDF, PNG, JPG, TIFF, or WEBP"
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Queued\nExtracting\nExtracted\nMapping\nMapped\nReview\nCreating\nCompleted\nFailed",
+            "default": "Queued",
+            "reqd": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "label": "Company",
+            "options": "Company",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "extractor_txn_id",
+            "fieldtype": "Data",
+            "label": "Extractor Transaction ID",
+            "read_only": 1,
+            "hidden": 1
+        },
+        {
+            "fieldname": "mapper_invoice_id",
+            "fieldtype": "Data",
+            "label": "Mapper Invoice ID",
+            "read_only": 1,
+            "hidden": 1
+        },
+        {
+            "fieldname": "extraction_section",
+            "fieldtype": "Section Break",
+            "label": "Extraction Result",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "extracted_data",
+            "fieldtype": "JSON",
+            "label": "Extracted Data",
+            "read_only": 1,
+            "description": "Raw extraction output from invoice-extractor (with confidence scores)"
+        },
+        {
+            "fieldname": "extraction_confidence",
+            "fieldtype": "Percent",
+            "label": "Extraction Confidence",
+            "read_only": 1
+        },
+        {
+            "fieldname": "extraction_provider",
+            "fieldtype": "Data",
+            "label": "AI Provider Used",
+            "read_only": 1
+        },
+        {
+            "fieldname": "extraction_model",
+            "fieldtype": "Data",
+            "label": "AI Model Used",
+            "read_only": 1
+        },
+        {
+            "fieldname": "extraction_cost",
+            "fieldtype": "Currency",
+            "label": "Extraction Cost (USD)",
+            "read_only": 1
+        },
+        {
+            "fieldname": "mapping_section",
+            "fieldtype": "Section Break",
+            "label": "Mapping Result",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "mapped_data",
+            "fieldtype": "JSON",
+            "label": "Mapped Data",
+            "read_only": 1,
+            "description": "Resolved ERPNext-ready JSON from invoice-mapper"
+        },
+        {
+            "fieldname": "mapping_suggestions",
+            "fieldtype": "JSON",
+            "label": "Mapping Suggestions",
+            "read_only": 1,
+            "description": "Suggestions returned by mapper for review"
+        },
+        {
+            "fieldname": "output_section",
+            "fieldtype": "Section Break",
+            "label": "Result"
+        },
+        {
+            "fieldname": "purchase_invoice",
+            "fieldtype": "Link",
+            "label": "Purchase Invoice",
+            "options": "Purchase Invoice",
+            "read_only": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "error_message",
+            "fieldtype": "Small Text",
+            "label": "Error Message",
+            "read_only": 1
+        },
+        {
+            "fieldname": "processing_log",
+            "fieldtype": "Text",
+            "label": "Processing Log",
+            "read_only": 1
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1
+        },
+        {
+            "role": "Accounts Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1
+        },
+        {
+            "role": "Accounts User",
+            "read": 1,
+            "write": 1,
+            "create": 1
+        }
+    ]
+}
