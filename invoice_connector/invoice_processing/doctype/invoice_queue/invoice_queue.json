@@ -50,10 +50,22 @@
             "hidden": 1
         },
         {
+            "fieldname": "review_section",
+            "fieldtype": "Section Break",
+            "label": "Invoice Review",
+            "depends_on": "extracted_data"
+        },
+        {
+            "fieldname": "review_panel",
+            "fieldtype": "HTML",
+            "label": "Review Panel"
+        },
+        {
             "fieldname": "extraction_section",
             "fieldtype": "Section Break",
             "label": "Extraction Result",
-            "collapsible": 1
+            "collapsible": 1,
+            "collapsed": 1
         },
         {
             "fieldname": "extracted_data",
@@ -90,6 +102,7 @@
             "fieldname": "mapping_section",
             "fieldtype": "Section Break",
             "label": "Mapping Result",
+            "collapsed": 1,
             "collapsible": 1
         },
         {

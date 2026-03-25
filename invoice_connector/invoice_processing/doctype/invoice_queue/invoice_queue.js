@@ -22,6 +22,12 @@ frappe.ui.form.on("Invoice Queue", {
             });
         }
 
+        if (frm.doc.status === "Extracting") {
+            frm.add_custom_button(__("Check Status"), () => {
+                frm.call("poll_extraction").then(() => frm.reload_doc());
+            });
+        }
+
         if (frm.doc.status === "Extracted") {
             frm.add_custom_button(__("Send to Mapper"), () => {
                 frm.call("send_to_mapper").then(() => frm.reload_doc());
@@ -47,17 +53,7 @@ frappe.ui.form.on("Invoice Queue", {
 });
 
 function render_review_panel(frm) {
-    // Remove existing review panel
-    frm.fields_dict.extracted_data.$wrapper.closest(".frappe-control").before(
-        '<div id="invoice-review-panel"></div>'
-    );
-
-    const $existing = $(frm.wrapper).find("#invoice-review-panel");
-    if ($existing.length > 1) {
-        $existing.not(":last").remove();
-    }
-
-    const $panel = $(frm.wrapper).find("#invoice-review-panel").last();
+    const $panel = frm.fields_dict.review_panel.$wrapper;
     $panel.empty();
 
     let data;

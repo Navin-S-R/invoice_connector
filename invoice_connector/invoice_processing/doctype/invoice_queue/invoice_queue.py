@@ -25,6 +25,16 @@ class InvoiceQueue(Document):
         self.save(ignore_permissions=True)
 
     @frappe.whitelist()
+    def poll_extraction(self):
+        """Manually poll the extractor for results. Use when scheduler is down."""
+        if self.status != "Extracting" or not self.extractor_txn_id:
+            frappe.throw("Nothing to poll — invoice is not in 'Extracting' state")
+
+        from invoice_connector.api.extract import poll_extraction_result
+
+        poll_extraction_result(self.name)
+
+    @frappe.whitelist()
     def retry_extraction(self):
         """Retry extraction for a failed queue entry."""
         if self.status not in ("Failed",):
