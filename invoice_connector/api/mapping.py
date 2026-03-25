@@ -131,9 +131,10 @@ def send_to_mapper(queue_name: str):
             frappe.db.commit()
 
     except Exception as e:
-        doc.status = "Failed"
+        # Fall back to Review instead of Failed — user can still create PI from extracted data
+        doc.status = "Review"
         doc.error_message = str(e)
-        doc.append_log(f"Mapping failed: {e}")
+        doc.append_log(f"Mapper unavailable: {e}. You can review and create PI from extracted data.")
         doc.save(ignore_permissions=True)
         frappe.db.commit()
         frappe.log_error(f"Invoice mapping failed for {queue_name}: {e}")
